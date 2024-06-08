@@ -36,6 +36,46 @@ public class DebateTeam {
         this.year = year;
     }
 
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public String getTeamCode() {
+        return teamCode;
+    }
+
+    public void setTeamCode(String teamCode) {
+        this.teamCode = teamCode;
+    }
+
+    public String getSide() {
+        return side;
+    }
+
+    public void setSide(String side) {
+        this.side = side;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     //private methods
     //covert the tabroom name to match wiki list
     private String wikiSchoolName(String school) {
@@ -62,6 +102,6 @@ public class DebateTeam {
     public String toString() {
         //the output final wiki link
         //eg https://opencaselist.com/hspolicy23/GlenbrookNorth/CaGo
-        return "https://opencaselist.com/hspolicy" + this.year + "/" + this.school + "/" +  this.teamCode + "/" + this.side;
+        return this.year + "/" + this.school + "/" +  this.teamCode + "/" + this.side;
     }
 }
