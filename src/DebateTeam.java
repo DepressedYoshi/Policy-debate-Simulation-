@@ -4,6 +4,8 @@ public class DebateTeam {
     private String team;
     private String teamCode;
     private String side;
+    private int wins = 0;
+    private int loses;
     private int year;
 
     //constructors
@@ -35,7 +37,21 @@ public class DebateTeam {
         this.side = side;
         this.year = year;
     }
+    public int getWins() {
+        return wins;
+    }
 
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public int getLoses() {
+        return loses;
+    }
+
+    public void setLoses(int loses) {
+        this.loses = loses;
+    }
     public String getSchool() {
         return school;
     }
@@ -102,6 +118,6 @@ public class DebateTeam {
     public String toString() {
         //the output final wiki link
         //eg https://opencaselist.com/hspolicy23/GlenbrookNorth/CaGo
-        return this.year + "/" + this.school + "/" +  this.teamCode + "/" + this.side;
+        return this.school + " " + this.team;
     }
 }

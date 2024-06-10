@@ -6,7 +6,9 @@ public class Round {
 
     public Round(final DebateTeam aff, final DebateTeam neg, final Judge judge) {
         this.aff = aff;
+        this.aff.setSide("Aff");
         this.neg = neg;
+        this.neg.setSide("Neg");
         this.winner = null;
         this.judge = judge;
     }
@@ -20,7 +22,7 @@ public class Round {
     }
     public DebateTeam getWinner() {
         if (winner == null){
-            System.out.println("THE DEBATE has ");
+            System.out.println("THE DEBATE has NOT been executed - ERROR Winner is null ");
         }
         return winner;
     }
@@ -35,10 +37,16 @@ public class Round {
 
     public void debating() {
         //todo apply judge biases to decesion
-        if(Math.random() < 0.50)
+        if(Math.random() < 0.50){
             setWinner(aff);
-        else
+            aff.setWins(aff.getWins()+1);
+            neg.setLoses(neg.getLoses()+1);
+        }
+        else {
             setWinner(neg);
+            neg.setWins(neg.getWins()+1);
+            aff.setLoses(aff.getLoses()+1);
+        }
     }
 
 
