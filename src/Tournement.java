@@ -129,23 +129,35 @@ public class Tournement {
 
     //----------------------------------------------------ELIM SIMULATION METHODS START----------------------------------------------------------//
     public void elim(){
-        genBracket();
+        ArrayList<DebateTeam> teamBreaked =  genTeamBreakedList();
+        ArrayList<Round> elimRounds  = genBracket(teamBreaked);
+        //todo update list as team get eliminated
+    }
+
+    private ArrayList<DebateTeam> genTeamBreakedList() {
+        sortTeamsByWins();
+        while (competitior.size() > Math.pow(2.0,numElim)){
+            competitior.remove(competitior.size()-1);
+        }
+        return this.competitior;
+    }
+
+
+    /* TODO 1. neg aff flip assignemtn, judge list pref assign ment
+    *
+    * */
+    public ArrayList<Round> genBracket(ArrayList<DebateTeam> teamBreaked){
+        ArrayList<Round> round = new ArrayList<>();
+        int size = teamBreaked.size();
+        for (int i = 0; i < size /2; i+=2) {
+            round.add(new Round(teamBreaked.get(i), teamBreaked.get(size - 1 - i), judgesList.get(i)));
+        }
+        return round;
     }
 
     //----------------------------------------------------ELIM SIMULATION METHODS END----------------------------------------------------------//
 
-    //TODO braket generation
-    public ArrayList<Round> genBracket(){
-        sortTeamsByWins();
-        ArrayList<Round> round = new ArrayList<>();
-        int numTeamLeft = (int) Math.pow(2, numElim);
-        while (competitior.size() >= numTeamLeft){
-            competitior.remove(competitior.size()-1);
-        }
-        // this is so wrong I will fish it later
-        return round;
-    }
-  // TODO return stat
+    // TODO return stat
     //TODO returen winner
     //Todo Judgeing pool
     //Todo Speaks result
