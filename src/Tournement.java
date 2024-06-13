@@ -1,18 +1,14 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class Tournement {
     private static final int NUM_PRESET = 2 ;
     // fields
     private int numPrelim = 6;
     private int numElim = 4;
-    private boolean isPrelim = true;
-    private boolean isElim = false;
     private DebateTeam winner = null;
-    private ArrayList<DebateTeam> competitior = new ArrayList<>();
-    private ArrayList<Judge> judgesList = new ArrayList<>();
+    private ArrayList<DebateTeam> competitior;
+    private ArrayList<Judge> judgesList;
 
 //Construnctor
 
@@ -24,23 +20,6 @@ public class Tournement {
     }
 
     // geeter ans setter
-
-
-    public boolean isPrelim() {
-        return isPrelim;
-    }
-
-    public void setPrelim(boolean prelim) {
-        isPrelim = prelim;
-    }
-
-    public boolean isElim() {
-        return isElim;
-    }
-
-    public void setElim(boolean elim) {
-        isElim = elim;
-    }
 
     public DebateTeam getWinner() {
         return winner;
@@ -67,7 +46,6 @@ public class Tournement {
     }
 
     private ArrayList<Round> paring(int currRounds) {
-        //todo Implement sid lock
         ArrayList<Round> rounds = new ArrayList<>();
         if (currRounds < NUM_PRESET){
             rounds = presetPairing();
@@ -78,8 +56,12 @@ public class Tournement {
                 DebateTeam team1 = this.competitior.get(i);
                 DebateTeam team2 = this.competitior.get(i + 1);
                 Judge judge = this.judgesList.get(i / 2);
-
-                rounds.add(new Round(team1, team2, judge));
+                //check for sidelock on even round
+                if (currRounds %2 == 0 && team1.getSide().equals("Neg")) {
+                    rounds.add(new Round(team1, team2, judge));
+                }else{
+                    rounds.add(new Round(team2, team1, judge));
+                }
             }
         }
         return rounds;
@@ -114,14 +96,11 @@ public class Tournement {
         return pairings;
     }
     public void sortTeamsByWins() {
-        Collections.sort(this.competitior, new Comparator<DebateTeam>() {
-            @Override
-            public int compare(DebateTeam team1, DebateTeam team2) {
-                if (team1.getWins() != team1.getWins()){
-                    return team2.getWins() - team1.getWins();
-                }
-                return team1.getSchool().compareTo(team2.getSchool());
+        Collections.sort(this.competitior, (team1, team2) -> {
+            if (team1.getWins() != team1.getWins()){
+                return team2.getWins() - team1.getWins();
             }
+            return team1.getSchool().compareTo(team2.getSchool());
         });
     }
 
@@ -129,9 +108,33 @@ public class Tournement {
 
     //----------------------------------------------------ELIM SIMULATION METHODS START----------------------------------------------------------//
     public void elim(){
-        ArrayList<DebateTeam> teamBreaked =  genTeamBreakedList();
-        ArrayList<Round> elimRounds  = genBracket(teamBreaked);
-        //todo update list as team get eliminated
+        //initialize Elime rounds and reduce the arraylist size by wins
+        ArrayList<ElimRounds> elimRounds  = genBracket(genTeamBreakedList());
+        for (int i = 0; i < numElim; i++) {
+            for (ElimRounds r: elimRounds){
+                r.debating();
+                if (i == numElim - 1){
+                    this.winner = r.getWinner();
+                }
+            }
+            elimRounds = updateBracker(elimRounds);
+
+        }
+
+    }
+
+    private ArrayList<ElimRounds> updateBracker(ArrayList<ElimRounds> elimRounds) {
+        if (elimRounds.size() < 2){
+            return elimRounds;
+        }
+        ArrayList<ElimRounds> next = new ArrayList<>();
+        for (int i = 0; i < elimRounds.size()/2; i+=2) {
+            DebateTeam w1 = elimRounds.get(i).getWinner();
+            DebateTeam w2 = elimRounds.get(i+1).getWinner();
+            Collections.shuffle(judgesList);
+            next.add(new ElimRounds(w1, w2, judgesList.get(i),judgesList.get(i), judgesList.get(i)));
+        }
+        return next;
     }
 
     private ArrayList<DebateTeam> genTeamBreakedList() {
@@ -143,21 +146,19 @@ public class Tournement {
     }
 
 
-    /* TODO 1. neg aff flip assignemtn, judge list pref assign ment
-    *
-    * */
-    public ArrayList<Round> genBracket(ArrayList<DebateTeam> teamBreaked){
-        ArrayList<Round> round = new ArrayList<>();
+    public ArrayList<ElimRounds> genBracket(ArrayList<DebateTeam> teamBreaked){
+        Collections.shuffle(judgesList);
+        ArrayList<ElimRounds> round = new ArrayList<>();
         int size = teamBreaked.size();
         for (int i = 0; i < size /2; i+=2) {
-            round.add(new Round(teamBreaked.get(i), teamBreaked.get(size - 1 - i), judgesList.get(i)));
+            round.add(new ElimRounds(teamBreaked.get(i), teamBreaked.get(size - 1 - i), judgesList.get(i), judgesList.get(i+1), judgesList.get(i+2)));
         }
         return round;
     }
 
     //----------------------------------------------------ELIM SIMULATION METHODS END----------------------------------------------------------//
 
-    // TODO return stat
+    // TODO return stat witht ostring
     //TODO returen winner
     //Todo Judgeing pool
     //Todo Speaks result

@@ -1,17 +1,17 @@
 public class Round {
-    private DebateTeam aff;
-    private DebateTeam neg;
-    private DebateTeam winner;
-    private Judge judge;
+    protected DebateTeam aff;
+    protected DebateTeam neg;
+    protected DebateTeam winner;
+    protected Judge judge;
 
     public Round(final DebateTeam aff, final DebateTeam neg, final Judge judge) {
         this.aff = aff;
-        this.aff.setSide("Aff");
         this.neg = neg;
-        this.neg.setSide("Neg");
         this.winner = null;
         this.judge = judge;
     }
+
+
 
     public DebateTeam getAff() {
         return aff;
