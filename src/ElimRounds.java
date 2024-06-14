@@ -9,7 +9,9 @@ public class ElimRounds extends Round{
         this.judge2 = judge2;
         this.judge3 = judge3;
     }
-
+//Coinflip / assign sides
+    //todo implements check for previous rounds
+    //currently just ramdomly swag neg and aff team because default constructor have always assign the fist to be Aff,
     private void coinFlip(DebateTeam aff, DebateTeam neg) {
         if (Math.random()<0.5){
             DebateTeam temp = aff;
@@ -18,7 +20,8 @@ public class ElimRounds extends Round{
         }
     }
 
-
+// Elim version of the simulation for debate
+    //randomizes ballot count and check for winner instead of sigular votes
     @Override
     public void debating() {
         int affBallots = 0;

@@ -1,7 +1,7 @@
 public class Judge {
     private String name;
     private boolean flow;
-    //todo implement judge baises
+    //todo implement judge biases
 
     public Judge(String name) {
         this.name = name;

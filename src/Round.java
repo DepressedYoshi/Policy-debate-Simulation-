@@ -35,6 +35,9 @@ public class Round {
         return judge;
     }
 
+    //Main sim Method for a Debate round
+    //result in assigning the global DebateTeam field winner and increments win/loss count on each of the DebateTeam object
+    //Currently just a ramdomizer
     public void debating() {
         //todo apply judge biases to decesion
         if(Math.random() < 0.50){

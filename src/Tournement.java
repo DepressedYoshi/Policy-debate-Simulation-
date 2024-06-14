@@ -35,8 +35,10 @@ public class Tournement {
     }
 
     //----------------------------------------------------PRE_LIM SIMULATION METHODS START----------------------------------------------------------//
+    //Main simulation method for the prelim rounds
     public void prelim(){
         for (int i = 0; i < numPrelim; i++) {
+            //generat
             ArrayList<Round> pairing = paring(i);
             for (Round r : pairing){
                 r.debating();
@@ -44,9 +46,11 @@ public class Tournement {
             }
         }
     }
-
+//generate a list of Rounds, simulataes the paring
+    // this is not the preset - that is a separeate method
     private ArrayList<Round> paring(int currRounds) {
         ArrayList<Round> rounds = new ArrayList<>();
+        //check if it is preset
         if (currRounds < NUM_PRESET){
             rounds = presetPairing();
         }else {
@@ -66,7 +70,7 @@ public class Tournement {
         }
         return rounds;
     }
-
+//this generated preset parings, returen arraylist of Round Object
     private ArrayList<Round> presetPairing() {
         ArrayList<Round> pairings = new ArrayList<>();
         Collections.shuffle(competitior);
@@ -95,6 +99,7 @@ public class Tournement {
 
         return pairings;
     }
+    //Sorted the result list, helper method for other to simulate how teams get paried
     public void sortTeamsByWins() {
         Collections.sort(this.competitior, (team1, team2) -> {
             if (team1.getWins() != team1.getWins()){
@@ -107,6 +112,7 @@ public class Tournement {
     //----------------------------------------------------PRELIM SIMULATION METHODS END----------------------------------------------------------//
 
     //----------------------------------------------------ELIM SIMULATION METHODS START----------------------------------------------------------//
+    //Main simulation method for elim
     public void elim(){
         //initialize Elime rounds and reduce the arraylist size by wins
         ArrayList<ElimRounds> elimRounds  = genBracket(genTeamBreakedList());
@@ -122,8 +128,9 @@ public class Tournement {
         }
 
     }
-
+    //Update and generate the next round of elim by making a new list of pp who won
     private ArrayList<ElimRounds> updateBracker(ArrayList<ElimRounds> elimRounds) {
+        //check if it is final - returns it-self
         if (elimRounds.size() < 2){
             return elimRounds;
         }
@@ -136,7 +143,7 @@ public class Tournement {
         }
         return next;
     }
-
+//shorten the global fields List for DebatTeam such that it become the stareting pitnf for first Elim
     private ArrayList<DebateTeam> genTeamBreakedList() {
         sortTeamsByWins();
         while (competitior.size() > Math.pow(2.0,numElim)){
@@ -145,7 +152,8 @@ public class Tournement {
         return this.competitior;
     }
 
-
+//Create the elim braket in the form of a Arraylist from the
+    //pari them high-low by wins
     public ArrayList<ElimRounds> genBracket(ArrayList<DebateTeam> teamBreaked){
         Collections.shuffle(judgesList);
         ArrayList<ElimRounds> round = new ArrayList<>();
