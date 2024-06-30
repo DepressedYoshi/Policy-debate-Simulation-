@@ -4,6 +4,7 @@ import java.util.Collections;
 public class Tournement {
     private static final int NUM_PRESET = 2 ;
     // fields
+    private String name;
     private int numPrelim = 6;
     private int numElim = 4;
     private DebateTeam winner = null;
@@ -12,7 +13,8 @@ public class Tournement {
 
 //Construnctor
 
-    public Tournement(int numPrelim, int numElim, ArrayList<DebateTeam> competitior, ArrayList<Judge> judgesList) {
+    public Tournement(String name, int numPrelim, int numElim, ArrayList<DebateTeam> competitior, ArrayList<Judge> judgesList) {
+        this.name = name;
         this.numPrelim = numPrelim;
         this.numElim = numElim;
         this.competitior = competitior;
@@ -166,9 +168,16 @@ public class Tournement {
 
     //----------------------------------------------------ELIM SIMULATION METHODS END----------------------------------------------------------//
 
-    // TODO return stat witht ostring
-    //TODO returen winner
     //Todo Judgeing pool
     //Todo Speaks result
 
+
+    @Override
+    public String toString() {
+        //todo check simulation has occured and no bug can happen
+        String winnerStat = " !!!!!!!!!!!!! The Winner of " + this.name + " is " + winner.getTeamCode() + "with a total of " + winner.getWins() + "wins !!!!!!!!!!!!! \n";
+        String divider = "------------------------------------------------------------------------------------------------------------------------------------------\n";
+        String tStat = "Tournement info: \n" + "Total number of prelim rounds: " + numPrelim + "\n" + "Total number of elim rounds: "+ numElim +"\n";
+        return winnerStat + divider + tStat;
+    }
 }
