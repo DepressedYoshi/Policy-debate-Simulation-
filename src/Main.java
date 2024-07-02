@@ -7,7 +7,7 @@ public class Main {
         ArrayList<String> teams = new  ArrayList<>();
         ArrayList<String> judgeNames = new  ArrayList<>();
         ArrayList<DebateTeam> entries = initEntry(schools, teams);
-        ArrayList<Judge> judges = initJudge(judgeNames);
+        ArrayList<Judge> judges = initJudge(judgeNames, entries);
         Tournement chuckBulligal = new Tournement("Chuck Balligal Ivitational",6, 3,entries, judges);
         //simulate preilim
         chuckBulligal.simulation();
@@ -37,11 +37,18 @@ public static ArrayList<DebateTeam> initEntry(ArrayList<String> school, ArrayLis
 }
 
 // Initialized the Judge list
-public static ArrayList<Judge> initJudge (ArrayList<String> name){
+public static ArrayList<Judge> initJudge (ArrayList<String> name, ArrayList<DebateTeam> team){
+    // todo : check for UQ judge, i.e. implement each school has to bring x judges
+    //currently it only check if number of jusges is eough
+    if (name.size() * 2 < team.size()){
+        System.out.println("ERROR: NOT ENOUGH JUDGES WITH CURRENT SETTINGS");
+        return null;
+    }
+
     // I'm sorry
+
     ArrayList<Judge> a = new ArrayList<>();
-    // todo : check for UQ judge, i.e. implement each school has to bring x judge and check if a school bring enough judges
-    //todo
+
     for (int i = 0; i < name.size(); i++) {
         a.add(new Judge(name.get(i)));
     }

@@ -44,7 +44,7 @@ public class Tournement {
             ArrayList<Round> pairing = paring(i);
             for (Round r : pairing){
                 r.debating();
-                System.out.println("This is Round" + i + ", and the winner is " + r.getWinner());
+                System.out.println("This is Round " + i + " of prelim, the aff is: " + r.getAff() + "the neg is: " + r.getNeg() + "and " + r.getWinner() + "won" );
             }
         }
     }
@@ -86,7 +86,7 @@ public class Tournement {
 
         // Check if there are enough judges
         if (this.judgesList.size() < this.competitior.size() / 2) {
-            System.out.println("JUDGES NEEDED");
+            System.out.println("ERROR: NOT ENOUGH JUDGES WHEN CONFIGURING PRESET");
         }
 
         // Create rounds
