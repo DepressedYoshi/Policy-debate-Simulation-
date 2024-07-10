@@ -1,4 +1,6 @@
 public class DebateTeam {
+    //todo : implement export data to a scout sheet to scrap data fromt ab
+    // todo maybe in python
     //fields
     private String school;
     private String team;
