@@ -31,6 +31,22 @@ public class Tournement {
         this.winner = winner;
     }
 
+    public int getNumPrelim() {
+        return numPrelim;
+    }
+
+    public void setNumPrelim(int numPrelim) {
+        this.numPrelim = numPrelim;
+    }
+
+    public int getNumElim() {
+        return numElim;
+    }
+
+    public void setNumElim(int numElim) {
+        this.numElim = numElim;
+    }
+
     public void simulation(){
         prelim();
         elim();
@@ -44,7 +60,7 @@ public class Tournement {
             ArrayList<Round> pairing = paring(i);
             for (Round r : pairing){
                 r.debating();
-                System.out.println("This is Round " + i + " of prelim, the aff is: " + r.getAff() + "the neg is: " + r.getNeg() + "and " + r.getWinner() + "won" );
+                System.out.println("This is Round " + (i+1) + " of prelim, the aff is: " + r.getAff() + "the neg is: " + r.getNeg() + "and " + r.getWinner() + "won" );
             }
         }
     }
@@ -175,7 +191,7 @@ public class Tournement {
     @Override
     public String toString() {
         //todo check simulation has occured and no bug can happen
-        String winnerStat = " !!!!!!!!!!!!! The Winner of " + this.name + " is " + winner.getTeamCode() + "with a total of " + winner.getWins() + "wins !!!!!!!!!!!!! \n";
+        String winnerStat = " !!!!!!!!!!!!! The Winner of " + this.name + " is " + winner.getSchool() + " " + winner.getTeamCode() + " with a total of " + winner.getWins() + "wins !!!!!!!!!!!!! \n";
         String divider = "------------------------------------------------------------------------------------------------------------------------------------------\n";
         String tStat = "Tournement info: \n" + "Total number of prelim rounds: " + numPrelim + "\n" + "Total number of elim rounds: "+ numElim +"\n";
         return winnerStat + divider + tStat;

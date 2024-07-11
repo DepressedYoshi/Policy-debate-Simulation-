@@ -13,7 +13,8 @@ public class Main {
         ArrayList<String> judgeNames = readColumnFromExcel(filePath,1,3);
         ArrayList<DebateTeam> entries = initEntry(schools, teams);
         ArrayList<Judge> judges = initJudge(judgeNames, entries);
-        Tournement chuckBulligal = new Tournement("Chuck Balligal Ivitational",6, 3,entries, judges);
+        Tournement chuckBulligal = new Tournement("Chuck Balligal Ivitational",6, 4,entries, judges);
+        // Tournement set up
         //simulate preilim
         chuckBulligal.simulation();
         System.out.println(chuckBulligal.toString());
