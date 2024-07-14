@@ -56,7 +56,6 @@ public class Tournement {
     //Main simulation method for the prelim rounds
     public void prelim(){
         for (int i = 0; i < numPrelim; i++) {
-            //generat
             ArrayList<Round> pairing = paring(i);
             for (Round r : pairing){
                 r.debating();
@@ -120,10 +119,7 @@ public class Tournement {
     //Sorted the result list, helper method for other to simulate how teams get paried
     public void sortTeamsByWins() {
         Collections.sort(this.competitior, (team1, team2) -> {
-            if (team1.getWins() != team1.getWins()){
-                return team2.getWins() - team1.getWins();
-            }
-            return team1.getSchool().compareTo(team2.getSchool());
+            return team2.getWins() - team1.getWins();
         });
     }
 
@@ -134,6 +130,7 @@ public class Tournement {
     public void elim(){
         //initialize Elime rounds and reduce the arraylist size by wins
         ArrayList<ElimRounds> elimRounds  = genBracket(genTeamBreakedList());
+
         for (int i = 0; i < numElim; i++) {
             for (ElimRounds r: elimRounds){
                 r.debating();
@@ -164,13 +161,29 @@ public class Tournement {
 //shorten the global fields List for DebatTeam such that it become the stareting pitnf for first Elim
     private ArrayList<DebateTeam> genTeamBreakedList() {
         sortTeamsByWins();
+        printElimResult();
+
+        //reduce the list
         while (competitior.size() > Math.pow(2.0,numElim)){
             competitior.remove(competitior.size()-1);
         }
         return this.competitior;
     }
 
-//Create the elim braket in the form of a Arraylist from the
+    private void printElimResult() {
+        //output the result
+        sortTeamsByWins();
+        System.out.println("--------------------------------------- ALL THE PRELIM DEBATE HAS FINISHED ---------------------------------------");
+        System.out.println("--------------------------------------- This is the resutl  ---------------------------------------");
+        for (int i = 0; i < competitior.size(); i++) {
+            DebateTeam holder = competitior.get(i);
+            System.out.println ("Seed " + (i+1) + " is " + holder.toString() +" Record: "+ holder.getWins() + "-" + holder.getLoses());
+        }
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println((int) Math.pow(2.0,numElim) +  "teams will break ");
+    }
+
+    //Create the elim braket in the form of a Arraylist from the
     //pari them high-low by wins
     public ArrayList<ElimRounds> genBracket(ArrayList<DebateTeam> teamBreaked){
         Collections.shuffle(judgesList);
